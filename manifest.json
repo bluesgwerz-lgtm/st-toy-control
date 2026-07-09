@@ -1,0 +1,11 @@
+{
+    "display_name": "Toy Control",
+    "loading_order": 100,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "",
+    "author": "yanyan",
+    "version": "1.0.0",
+    "homePage": ""
+}
