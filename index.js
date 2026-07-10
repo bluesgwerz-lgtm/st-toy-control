@@ -7,7 +7,9 @@
     // 与 server.py 的模式白名单保持一致，两头改要同步
     const MODES = [
         'wave', 'pulse', 'tease', 'edge', 'deep',
-        'devour', 'chaos', 'storm', 'gentle', 'climb', 'stop',
+        'devour', 'chaos', 'storm', 'gentle', 'climb',
+        'breathe', 'heartbeat', 'gspot', 'alternate', 'denial', 'random',
+        'stop',
     ];
 
     // 兼容 ‹toy:xxx› 和 <toy:xxx> 两种括号

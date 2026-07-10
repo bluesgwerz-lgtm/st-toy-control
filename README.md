@@ -20,7 +20,7 @@ SillyTavern → 扩展面板 → Install extension → 粘贴本仓库地址。
 
 `‹toy:模式名›`（兼容半角 `<toy:模式名>`）。一条回复含多个标记时最后一个生效。
 
-内置模式白名单：`wave` `pulse` `tease` `edge` `deep` `devour` `chaos` `storm` `gentle` `climb` `stop`。修改白名单直接编辑 `index.js` 顶部的 `MODES` 数组，与你服务器端的模式名保持一致。
+内置模式白名单：`wave` `pulse` `tease` `edge` `deep` `devour` `chaos` `storm` `gentle` `climb` `breathe` `heartbeat` `gspot` `alternate` `denial` `random` `stop`。修改白名单直接编辑 `index.js` 顶部的 `MODES` 数组，与你服务器端的模式名保持一致。
 
 ## 服务器端约定
 
