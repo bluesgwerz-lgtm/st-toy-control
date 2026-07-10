@@ -28,6 +28,8 @@
         if (settings[key] === undefined) settings[key] = DEFAULTS[key];
     }
 
+    let lastMode = 'stop'; // 顶栏状态灯用：最近一次发出的模式（no-cors 读不到 /state，只能本地记账）
+
     function extractMode(text) {
         let mode = null;
         for (const m of text.matchAll(MARKER)) {
@@ -38,6 +40,7 @@
     }
 
     async function sendMode(mode, isRetry = false) {
+        if (!isRetry) { lastMode = mode; updateTopIcon(); }
         const base = settings.serverUrl.replace(/\/+$/, '');
         const url = `${base}/set?mode=${encodeURIComponent(mode)}`;
         try {
@@ -89,6 +92,63 @@
         }
     }
 
+    /* ================= 顶栏状态灯 / 急停 =================
+       灰=禁用 · 正常色=待机 · 粉色跳动=播放中
+       单击=立即停止（禁用状态也照发，急停永远可用）
+       双击或长按≈0.6秒=启用⇄禁用 */
+
+    function setEnabled(on) {
+        settings.enabled = on;
+        if (!on) sendMode('stop'); // 关掉开关时顺手停机，保险
+        $('#toy_ctrl_enabled').prop('checked', on);
+        ctx.saveSettingsDebounced();
+        updateTopIcon();
+        toastr.info(on ? '已启用' : '已禁用', 'Toy Control');
+    }
+
+    function updateTopIcon() {
+        const el = $('#toy_ctrl_icon');
+        if (!el.length) return;
+        el.toggleClass('toy-off', !settings.enabled);
+        el.toggleClass('toy-active', settings.enabled && lastMode !== 'stop');
+        el.attr('title', settings.enabled
+            ? `Toy Control：${lastMode}\n单击=立即停止 · 双击/长按=禁用`
+            : 'Toy Control：已禁用\n双击/长按=启用（单击仍可发停止）');
+    }
+
+    function addTopIcon() {
+        const holder = $('#top-settings-holder');
+        if (!holder.length) return; // 顶栏结构对不上就放弃图标，不影响核心功能
+
+        $('head').append(`<style>
+            #toy_ctrl_icon.toy-off { opacity: .35; }
+            #toy_ctrl_icon.toy-active { color: #ff6b81; animation: toy-ctrl-pulse 1.1s ease-in-out infinite; }
+            @keyframes toy-ctrl-pulse { 50% { transform: scale(1.25); opacity: .7; } }
+        </style>`);
+        holder.append(`
+        <div id="toy_ctrl_drawer" class="drawer">
+            <div class="drawer-toggle">
+                <div id="toy_ctrl_icon" class="drawer-icon fa-solid fa-gamepad fa-fw closedIcon interactable" tabindex="0"></div>
+            </div>
+        </div>`);
+
+        const el = $('#toy_ctrl_icon');
+        let pressTimer = null, longPressed = false;
+        el.on('pointerdown', () => {
+            longPressed = false;
+            pressTimer = setTimeout(() => { longPressed = true; setEnabled(!settings.enabled); }, 600);
+        });
+        el.on('pointerup pointerleave pointercancel', () => clearTimeout(pressTimer));
+        el.on('click', () => {
+            if (longPressed) { longPressed = false; return; } // 长按抬手附带的 click，吃掉
+            sendMode('stop');
+            toastr.info('已发送停止', 'Toy Control');
+        });
+        el.on('dblclick', () => setEnabled(!settings.enabled)); // 双击前的两次单击各发一次 stop，无害
+        el.on('contextmenu', e => e.preventDefault()); // 手机长按不弹系统菜单
+        updateTopIcon();
+    }
+
     function addSettingsUI() {
         const html = `
         <div class="toy-control-settings">
@@ -116,9 +176,7 @@
         $('#extensions_settings2').append(html);
 
         $('#toy_ctrl_enabled').prop('checked', settings.enabled).on('change', function () {
-            settings.enabled = this.checked;
-            if (!this.checked) sendMode('stop'); // 关掉开关时顺手停机，保险
-            ctx.saveSettingsDebounced();
+            setEnabled(this.checked);
         });
         $('#toy_ctrl_hide').prop('checked', settings.hideMarkers).on('change', function () {
             settings.hideMarkers = this.checked;
@@ -134,6 +192,7 @@
 
     jQuery(() => {
         addSettingsUI();
+        addTopIcon();
         ctx.eventSource.on(ctx.eventTypes.MESSAGE_RECEIVED, onMessageReceived);
         ctx.eventSource.on(ctx.eventTypes.CHARACTER_MESSAGE_RENDERED, onMessageRendered);
         ctx.eventSource.on(ctx.eventTypes.CHAT_CHANGED, onChatChanged);
