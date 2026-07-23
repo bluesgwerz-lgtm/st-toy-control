@@ -31,6 +31,17 @@ SillyTavern → 扩展面板 → Install extension → 粘贴本仓库地址。
 
 扩展用 no-cors 模式发请求，服务器不配 CORS 头也能收到指令。
 
+## MCP 接入（可选）
+
+仓库附带 [mcp_server.py](mcp_server.py)：把同一个控制服务器暴露成 MCP 工具，让任何支持 MCP 的 AI 客户端（Claude Desktop、NuOS 等）也能驱动玩具，与酒馆扩展并行的第二入口，二者可同时使用。
+
+```
+pip install fastmcp
+python mcp_server.py      # 控制服务器需先在 9090 端口运行
+```
+
+MCP 客户端地址填 `http://127.0.0.1:9091/mcp`（Streamable HTTP，注意带 `/mcp` 路径）。暴露三个工具：`set_toy_mode(mode)`（白名单校验）、`stop_toy()`、`get_toy_state()`。文件本身不含任何蓝牙/设备逻辑，只做 HTTP 转发，遵循上面同一套服务器契约。注意：MCP 入口给了 AI 直接控制权，急停三条路（顶栏图标/面板按钮/浏览器访问 `/stop`）对它发起的模式同样有效。
+
 ## 安全设计
 
 - 顶栏常驻 🎮 急停图标，单击立即停止，禁用状态下同样有效
