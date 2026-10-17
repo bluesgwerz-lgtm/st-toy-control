@@ -22,6 +22,8 @@ MODES = {
     'wave', 'pulse', 'tease', 'edge', 'deep',
     'devour', 'chaos', 'storm', 'gentle', 'climb',
     'breathe', 'heartbeat', 'gspot', 'alternate', 'denial', 'random',
+    'tide', 'punish', 'ruin', 'afterglow', 'stairs', 'countdown',
+    'knock', 'swing', 'tremble', 'lock', 'doubletap', 'mercy',
     'stop',
 }
 
@@ -39,9 +41,9 @@ def _get(path: str) -> dict:
 @mcp.tool()
 def set_toy_mode(mode: str) -> dict:
     """设置玩具节奏模式。
-    温柔系: gentle(温存) wave(波浪) breathe(呼吸) heartbeat(心跳)
-    技巧系: tease(挑逗) gspot(G点) deep(深入) devour(吞噬) alternate(交替)
-    失控系: climb(攀升) edge(焦灼) denial(禁止) random(随机) chaos(失控) storm(风暴) pulse(脉冲)
+    温柔系: gentle(温存) wave(波浪) breathe(呼吸) heartbeat(心跳) swing(秋千) afterglow(余韵)
+    技巧系: tease(挑逗) gspot(G点) deep(深入) devour(吞噬) alternate(交替) knock(敲门) doubletap(双击) tremble(颤抖) stairs(台阶)
+    失控系: climb(攀升) tide(潮汐) edge(焦灼) lock(锁潮) denial(禁止) ruin(毁掉) countdown(倒数) random(随机) punish(惩罚) chaos(失控) storm(风暴) pulse(脉冲) mercy(求饶)
     停止: stop"""
     mode = mode.strip().lower()
     if mode not in MODES:

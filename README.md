@@ -22,7 +22,7 @@ SillyTavern → 扩展面板 → Install extension → 粘贴本仓库地址。
 
 `‹toy:模式名›`（兼容半角 `<toy:模式名>`）。一条回复含多个标记时最后一个生效。
 
-内置模式白名单：`wave` `pulse` `tease` `edge` `deep` `devour` `chaos` `storm` `gentle` `climb` `breathe` `heartbeat` `gspot` `alternate` `denial` `random` `stop`。修改白名单直接编辑 `index.js` 顶部的 `MODES` 数组，与你服务器端的模式名保持一致。
+内置模式白名单（28 式 + 停止）：`wave` `pulse` `tease` `edge` `deep` `devour` `chaos` `storm` `gentle` `climb` `breathe` `heartbeat` `gspot` `alternate` `denial` `random` `tide` `punish` `ruin` `afterglow` `stairs` `countdown` `knock` `swing` `tremble` `lock` `doubletap` `mercy` `stop`。修改白名单直接编辑 `index.js` 顶部的 `MODES` 数组（用 MCP 的话 `mcp_server.py` 里的 `MODES` 也要同步），与你服务器端的模式名保持一致。
 
 ## 服务器端约定
 
@@ -48,6 +48,10 @@ MCP 客户端地址填 `http://127.0.0.1:9091/mcp`（Streamable HTTP，注意带
 - 关闭扩展总开关时自动发送一次 `stop`
 - 设置面板常驻「⏹ 立即停止」按钮
 - 模式名走白名单校验，未知标记直接忽略
+
+## 更新说明
+
+- 模式白名单从 16 式扩到 28 式（酒馆扩展与 `mcp_server.py` 同步），新增：`tide` 潮汐、`punish` 惩罚、`ruin` 毁掉、`afterglow` 余韵、`stairs` 台阶、`countdown` 倒数、`knock` 敲门、`swing` 秋千、`tremble` 颤抖、`lock` 锁潮、`doubletap` 双击、`mercy` 求饶。扩展仍只转发模式名，节奏由你的服务器端实现，服务器要认得新名字才会动；MCP 的 `set_toy_mode` 说明里的模式列表也已同步，AI 侧能直接看到新模式。
 
 ## License
 

@@ -9,6 +9,8 @@
         'wave', 'pulse', 'tease', 'edge', 'deep',
         'devour', 'chaos', 'storm', 'gentle', 'climb',
         'breathe', 'heartbeat', 'gspot', 'alternate', 'denial', 'random',
+        'tide', 'punish', 'ruin', 'afterglow', 'stairs', 'countdown',
+        'knock', 'swing', 'tremble', 'lock', 'doubletap', 'mercy',
         'stop',
     ];
 
