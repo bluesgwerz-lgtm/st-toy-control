@@ -51,6 +51,10 @@ MCP 客户端地址填 `http://127.0.0.1:9091/mcp`（Streamable HTTP，注意带
 
 ## 更新说明
 
+### v1.3.1
+- 设置面板标题旁显示版本号，更新扩展并刷新页面后一眼能确认是否已换上新版
+
+### v1.3.0 之后
 - 模式白名单从 16 式扩到 28 式（酒馆扩展与 `mcp_server.py` 同步），新增：`tide` 潮汐、`punish` 惩罚、`ruin` 毁掉、`afterglow` 余韵、`stairs` 台阶、`countdown` 倒数、`knock` 敲门、`swing` 秋千、`tremble` 颤抖、`lock` 锁潮、`doubletap` 双击、`mercy` 求饶。扩展仍只转发模式名，节奏由你的服务器端实现，服务器要认得新名字才会动；MCP 的 `set_toy_mode` 说明里的模式列表也已同步，AI 侧能直接看到新模式。
 
 ## License

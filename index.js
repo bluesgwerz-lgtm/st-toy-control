@@ -3,6 +3,7 @@
 
 (() => {
     const EXT = 'toy-control';
+    const VERSION = '1.3.1';   // 与 manifest.json 同步；面板标题显示，升级后一眼能看出换没换上
 
     // 与 server.py 的模式白名单保持一致，两头改要同步
     const MODES = [
@@ -159,7 +160,7 @@
         <div class="toy-control-settings">
             <div class="inline-drawer">
                 <div class="inline-drawer-toggle inline-drawer-header">
-                    <b>🎮 Toy Control</b>
+                    <b>🎮 Toy Control <span style="font-weight:normal;font-size:.75em;opacity:.55;margin-left:2px;">v${VERSION}</span></b>
                     <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
                 </div>
                 <div class="inline-drawer-content">
